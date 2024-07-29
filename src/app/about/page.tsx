@@ -68,26 +68,26 @@ export default function About() {
         </div>
         <div className="lg:order-first lg:row-span-2">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            I'm GoldZulu, an innovative IT leader specializing in AI, voice tech, and blockchain, based in London.
+            I&apos;m GoldZulu, an innovative IT leader specializing in AI, voice tech, and blockchain, based in London.
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
             <p>
-              With over 22 years of experience in leadership and advisory roles, I've been at the forefront of emerging technologies, driving innovation and adoption across businesses.
+              With over 22 years of experience in leadership and advisory roles, I&apos;ve been at the forefront of emerging technologies, driving innovation and adoption across businesses.
             </p>
             <p>
-              My expertise spans across three cutting-edge domains: Artificial Intelligence, Voice Technology, and Blockchain/Web3. As an AWS Certified Alexa Skill Builder and a proud member of the AWS Community Builder program, I've been chosen for my expertise in Machine Learning and Generative AI.
+              My expertise spans across three cutting-edge domains: Artificial Intelligence, Voice Technology, and Blockchain/Web3. As an AWS Certified Alexa Skill Builder and a proud member of the AWS Community Builder program, I&apos;ve been chosen for my expertise in Machine Learning and Generative AI.
             </p>
             <p>
-              In the AI realm, I work extensively with Machine Learning, OpenAI, Azure AI, AWS Bedrock, and Open Source LLMs. I've implemented AI solutions across various platforms, pushing the boundaries of what's possible with artificial intelligence.
+              In the AI realm, I work extensively with Machine Learning, OpenAI, Azure AI, AWS Bedrock, and Open Source LLMs. I&apos;ve implemented AI solutions across various platforms, pushing the boundaries of what&apos;s possible with artificial intelligence.
             </p>
             <p>
-              My voice tech journey has led me to become an expert in Amazon Alexa (ASK SDK, Skill Flow Builder) and Google Assistant Actions. I've developed complex voice applications that seamlessly integrate with IoT devices and other emerging technologies.
+              My voice tech journey has led me to become an expert in Amazon Alexa (ASK SDK, Skill Flow Builder) and Google Assistant Actions. I&apos;ve developed complex voice applications that seamlessly integrate with IoT devices and other emerging technologies.
             </p>
             <p>
-              In the blockchain space, I've had the privilege of winning global hackathons, including the EthGlobal Ethonline 2022 and the Moralis Filecoin Hackathon, where I clinched the grand prize for a voice-activated crypto wallet. I'm proficient in Ethereum smart contracts, NFT marketplaces, and DApp development.
+              In the blockchain space, I&apos;ve had the privilege of winning global hackathons, including the EthGlobal Ethonline 2022 and the Moralis Filecoin Hackathon, where I clinched the grand prize for a voice-activated crypto wallet. I&apos;m proficient in Ethereum smart contracts, NFT marketplaces, and DApp development.
             </p>
             <p>
-              Today, I operate at the intersection of AI, voice tech, and blockchain/web3, constantly pushing the boundaries of what's possible. Whether it's developing AI-powered applications, creating complex Alexa skills, or solving intricate blockchain problems, I'm always ready for the next challenge.
+              Today, I operate at the intersection of AI, voice tech, and blockchain/web3, constantly pushing the boundaries of what&apos;s possible. Whether it&apos;s developing AI-powered applications, creating complex Alexa skills, or solving intricate blockchain problems, I&apos;m always ready for the next challenge.
             </p>
           </div>
         </div>

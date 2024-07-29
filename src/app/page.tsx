@@ -257,7 +257,7 @@ export default async function Home() {
             Innovative IT leader, Startup Founder, AI enthusiast, voice tech expert, and blockchain pioneer.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I'm GoldZulu, an IT and AGI visionary with over 22 years of experience in leadership, development and advisory roles. Based in London, I specialize in AI, voice technology, and blockchain/web3, constantly pushing the boundaries of what's possible in these cutting-edge domains.
+            I&apos;m GoldZulu, an IT and AGI visionary with over 22 years of experience in leadership, development and advisory roles. Based in London, I specialize in AI, voice technology, and blockchain/web3, constantly pushing the boundaries of what&apos;s possible in these cutting-edge domains.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
