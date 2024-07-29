@@ -1,0 +1,237 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+
+export const article = {
+  author: 'GoldZulu',   // Update author
+  date: '2023-10-26',
+  title: 'AutoGPT Forge and the Agent Protocol',
+  description: 'Learn how to create an agent conforming to the agent protocol using AutoGPT Forge.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+## Introduction
+
+It's madness out there at the moment especially in the world of AI. More and more AI agents are popping up like mushrooms and all over the place.
+
+I used to be able to keep track of new AI Agents coming up per week but now not only did the number grew exponentially, there even different versions of the same agent!
+
+It's the wild west out there all over again with different agents being implemented in a different way and different frameworks.
+
+As a developer, have you ever tried developing against multiple evolving standards and protocols? It's a nightmare! Some of you code junkies might even remember the good old days of totally differing browser standards!
+
+For the users, how do you know which one is the best for their use cases? Most agents out there have their own unique interfaces and unique way of implementation. 
+
+Hence it would be a challenge compare something side by side when they are so different. It's like comparing apples and oranges.
+
+This is where, the pioneers of autonomous agents (at the time of this writing AutoGPT have more than 151k GitHub stars), the people at AutoGPT and the AI Engineering Foundation comes in with their Agent Protocol.
+
+In this tutorial, we are going to take a deep dive into the agent protocol and how AutoGPT provides an easy way to implement an agent that conforms to the agent protocol via the AutoGPT Forge.
+
+In turn, hopefully, we will see more agents out there using the Agent Protocol. Don't forget about me when you make the big bucks after creating your own super duper sentient agent protocol conforming agent that can take over the world!
+
+### Prerequisites
+
+This is an intermediate level tutorial. It is assume that you already have the environment setup and know your general way around the source code.
+
+Ideally you would have done the following:
+
+* forked and cloned the AutoGPT repository from  Github [AutoGPT](https://github.com/Significant-Gravitas/Auto-GPT.git)
+* followed any one of the available quickstart guides:
+    * [AutoGPT Getting Started](https://aiedge.medium.com/autogpt-forge-a-comprehensive-guide-to-your-first-steps-a1dfdf46e3b4) 
+    * [LabLab.ai AutoGPT Forge Tutorial](https://lablab.ai/t/auto-gpt-forge-tutorial)
+* installed Python 3.10+
+* installed Poetry
+* installed Flutter 
+
+### Note
+
+The whole AutoGPT repository is still in a state of constant change, so what is shown in this tutorial might be different due to having been chenged or updated. I will try to keep this tutorial as up to date as possible. But if you do find any discrepancies, please let me or the people at LabLab AI know.
+
+### Tutorial Outline
+
+There are three parts to this tutorial.
+
+1. The Agent Protocol - Here, i will cover the basics of the agent protocol, it's structure and key detail of the specification.
+
+2. AutoGPT Forge - How to use the forge to create an agent that conforms to the agent protocol.
+
+## The Agent Protocol
+
+The Agent Protocol is built with a vision that one day, all agents have a single standardised communication interface to communicate with.
+
+It is defined in the form of an API Specification, currently [OpenAPI Specification v3](https://swagger.io/docs/specification/about/)
+
+It is worthwhile to note that the specification is currently tech stack agnostic, meaning that it can be implemented in any programming language and framework. Although currently, the reference implementation is in Python.
+
+### Endpoints
+
+The specification list endpoints, which the agent should expose with predefined input and response models.
+
+There are two main endpoints:
+
+```POST /agent/tasks``` - for creating tasks
+
+```POST /agent/tasks/{id}/steps``` - for triggering next step for the task
+
+Below is a list of all the current endpoints and their methods as at the time of this writing:
+
+* Create Agent Task - POST
+* List Agent Tasks - GET
+* Get Agent Task - GET
+* List Agent Task Steps - GET
+* Execute Agent Task Step - POST
+* Get Agent Task Step - GET
+* List Agent Task Artifacts - GET
+* Upload Agent Task Artifacts - POST
+* Download Agent Task Artifact - GET
+
+To see all endpoints and their descriptions, please refer to the [Endpoints](https://agentprotocol.ai/endpoints).
+
+### Protocol Objects
+
+The base objects of the protocol are `Tasks`, `Steps` and `Artifacts`
+
+The following definition are taken from the [Agent Protocol Documentation](https://agentprotocol.ai/protocol) and reproduced here for convenience.
+
+#### Task
+
+A `Task` is specific goals that the agent is working towards. It can be narrowly specified or broadly specified.
+
+The `Task` object has the following properties:
+
+| Property           | Type              | Description                                     |
+| ------------------ | ----------------- | ----------------------------------------------- |
+| `task_id`          | `string`          | The ID of the task.                             |
+| `input`            | `string`          | Input prompt for the task.                      |
+| `additional_input` | `object`          | Additional input for the task.                  |
+| `steps`            | `array[Step]`     | The steps of the task.                          |
+| `artifacts`        | `array[Artifact]` | A list of artifacts that the task has produced. |
+
+#### Step
+
+A `Step` is a single action that the agent should perform. Each step is triggered by calling the `step` endpoint of the agent. The `Step` object has the following properties:
+
+| Property            | Type              | Description                                                            |
+| ------------------- | ----------------- | ---------------------------------------------------------------------- |
+| `task_id`           | `string`          | The ID of the task.                                                    |
+| `step_id`           | `string`          | The ID of the step.                                                    |
+| `input`             | `string`          | Input prompt for the step.                                             |
+| `additional_input`  | `object`          | Additional input for the step.                                         |
+| `name`              | `string`          | The name of the step.                                                  |
+| `status`            | `enum`            | The status of the step. Possible values are `created` and `completed`. |
+| `output`            | `string`          | Output of the step.                                                    |
+| `additional_output` | `object`          | Additional output of the step.                                         |
+| `artifacts`         | `array[Artifact]` | A list of artifacts that the step has produced.                        |
+| `is_last`           | `boolean`         | Whether this is the last step in the task.                             |
+
+#### Artifact
+
+An `Artifact` is a file that the agent has worked with. The `Artifact` object has the following properties:
+
+| Property        | Type     | Description                                             |
+| --------------- | -------- | ------------------------------------------------------- |
+| `artifact_id`   | `string` | The ID of the artifact.                                 |
+| `file_name`     | `string` | Filename of the artifact.                               |
+| `relative_path` | `string` | Relative path of the artifact in the agent's workspace. |
+
+## AutoGPT Forge
+
+The Forge is described as a starting point and launchpad for building agents. If you have cloned the AutoGPT repository, you would have seen the Forge folder `autogpts/forge`.
+
+It is a reference implementation of the Agent Protocol in Python that can scafolded out pretty quickly.
+
+According to Forge readme file on why one should use Forge:
+
+* No More Boilerplate! Don't let the mundane tasks stop you. Fork and build without the headache of starting from scratch!
+* Brain-centric Development! All the tools you need so you can spend 100% of your time on what matters - crafting the brain of your AI!
+* Tooling ecosystem! We work with the best in class tools to bring you the best experience possible!
+
+### Agent creation
+
+It is now time to get our hands dirty! To explore further, let's create an agent we can play with. Let's call the agent SkyNet.
+
+Again, you are expected to already know how to create a simple agent using the forge, run the agent using the flutter frontend and perform simple benchmarks.
+
+If you don't, I suggest you take some time to with another beginner level tutorial on how to do this.
+
+For convenience and revision, I will highlight the steps you need to do here at a high level.
+
+Create a new fork of the AutoGPT repository located at ```https://github.com/Significant-Gravitas/Auto-GPT``` and clone the forked repo.
+
+At the root of the AutoGPT repository (not the forge directory), execute the following command 
+
+```text
+./run agent create skynet
+```
+
+A new directory `autogpts/skynet` will be created with the reference code. 
+
+Carry on with the following to run your agent:
+
+* `cd autogpts/skynet`
+* Install [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) if you haven't already 
+* Run `poetry install` to install the project dependencies
+* Activate the virtual environment with `poetry shell`
+* Make sure you're in the poetry shell
+* Copy the example environment file with `cp .env.example .env`.
+* Open the `.env` file and add your OpenAI API key. 
+* Run your agent with `./run agents start skynet`. This command runs the server and watches for changes.
+
+It would show a some output of which one will mention the ```Agent server starting on http://localhost:8000```
+
+To verify the agent is running, open Chrome and go to 'http://localhost:8000'. 
+
+You should see `Welcome to the Auto-GPT Forge` on the page. This is the headless agent server running with the interface specified in the agent protocol's endpoints.
+
+### Agent frontend
+
+Technically, you should have all that is needed to start hacking away but like the famous Steve Jobs said, "There is one more thing...".
+
+The AutoGPT repository also comes with a frontend that you can use to interact with your agent. It uses [Flutter](https://docs.flutter.dev/get-started/install) and is activated by going to the root of the repository and running the following command:
+
+```text
+./run frontend
+```
+
+After a while, you should see the frontend running in Chrome at http://localhost:5000
+
+You can login using your Github or Google account to start using the frontend.
+
+It is not essential though for you to use the ready made frontend. The idea of having all the agent initial code, the frontend and the benchmark tools under one repo is to make it as simple as possible for you you to start.
+
+Some of you might prefer to build the agent and the front end for instance in Javascript or TypeScript. You can do that too although you will need to do a fair bit of development work yourself. 
+
+### The Agent's Heart
+
+Let's take a look at the code that was generated for us.
+
+The heart of the whole thing is the `agent.py` file. This is where the agent is defined and the agent protocol is implemented.
+
+```text
+autogpts/
+│
+└───skynet/
+    │
+    └───forge/
+        │   agent.py
+        │   ...
+        └───prompts/
+        │   agent.py
+        │   ...
+```
+
+## Conclusion
+
+Congratulations! Give yourself a pat on the back... hard! You have now given yourself the knowledge of an agent blueprint and created your very own agent starting point using AutoGPT Forge and hopefully learn a thing or two about the agent protocol along the way!
+
+Hope you find this tutorial useful. Love to hear your feedback!
+
+Should you have any questions, feel free to reach out to me on [Twitter](https://twitter.com/voicetechguy1) or in LabLab AI Discord Server. 
+
+Written by [goldzulu](https://linkedin.com/in/goldzulu)
