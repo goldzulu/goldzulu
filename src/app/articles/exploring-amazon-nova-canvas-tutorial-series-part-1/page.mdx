@@ -131,22 +131,141 @@ Clone the repository:
 git clone https://github.com/goldzulu/amazonnovacanvas.git
 ```
 
-### Understanding BedrockImageGenerator.js
+The main main directory contain helper file BedrockImageGenerator.js which will help you generate images using Amazon Nova Canvas from your own script. You should be able to reuse this file in your project with some minor changes.
 
-The `BedrockImageGenerator` class provides a streamlined interface for generating images. Here are the key components:
+## Understanding BedrockImageGenerator.js
 
+Let's take a closer look at the BedrockImageGenerator.js file.
+
+The `BedrockImageGenerator` class provides a streamlined interface for generating images using Amazon Bedrock's AI models. Let's look at its key components:
+
+### Core Configuration
+
+BedrockImageGenerator.js:22-23
 ```javascript
-// Core Configuration
 static DEFAULT_MODEL_ID = 'amazon.nova-canvas-v1:0';
 static DEFAULT_REGION = 'us-east-1';
+```
 
-// Image Generation Command
+The class uses Amazon's Nova Canvas model and US East region by default. You can override these settings when instantiating the class.
+
+### Image Generation
+
+BedrockImageGenerator.js:82-89
+```javascript
 const command = new InvokeModelCommand({
     body: JSON.stringify(inferenceParams),
     modelId,
     accept: 'application/json',
     contentType: 'application/json'
 });
+```
+
+The heart of the class lies in its `generateImages` method, which handles the AWS Bedrock API communication. It takes your image generation parameters and sends them to the Nova Canvas model.
+
+### Image Processing and Storage
+
+BedrockImageGenerator.js:106-111
+```javascript
+await Promise.all(responseBody.images.map((imageBase64, index) => {
+    const imageBuffer = Buffer.from(imageBase64, 'base64');
+    imagePaths.push(`${this.outputDirectory}/image_${index + 1}.png`);
+    return this.saveFile(imageBuffer, `image_${index + 1}.png`, true);
+}));
+```
+
+Generated images are automatically converted from base64 to PNG format and saved to the specified output directory. The class handles all the necessary file management and error handling behind the scenes.
+
+This helper class simplifies the complex process of AI image generation into a few simple method calls, making it easy to integrate Amazon Nova Canvas into your applications.
+
+## Creating Your First Image Generator
+
+Let's create a new file called `GenerateImage.js` that will use our `BedrockImageGenerator` class. We'll build this step by step, incorporating best practices for Nova Canvas.
+
+### Step 1: Basic Setup with Timestamped Output
+
+First, let's create the file with proper ES module imports and a timestamp-based output directory for better organization:
+
+```javascript
+import { BedrockImageGenerator } from './BedrockImageGenerator.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get current directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Create timestamped output directory for better organization
+const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+const outputDir = path.join(__dirname, 'output', timestamp);
+```
+
+### Step 2: Initialize the Generator
+
+Create an instance of our generator with the timestamped output directory:
+
+```javascript
+const generator = new BedrockImageGenerator({
+    outputDirectory: outputDir
+});
+```
+
+### Step 3: Define Comprehensive Generation Parameters
+
+Let's create a detailed configuration that showcases Nova Canvas's capabilities:
+
+```javascript
+const inferenceParams = {
+    taskType: "TEXT_IMAGE",
+    textToImageParams: {
+        // Detailed prompt with style, lighting, and composition
+        text: "A serene mountain lake at golden hour, with crystal clear water reflecting snow-capped peaks, photorealistic style, soft natural lighting, wide-angle view",
+        // Negative prompt to refine the output
+        negativeText: "blurry, oversaturated, cartoon-style, artificial-looking, dark shadows, distorted reflections"
+    },
+    imageGenerationConfig: {
+        numberOfImages: 2,              // Generate two variations
+        quality: "premium",             // Higher quality for final output
+        width: 1280,                    // Maximum supported width
+        height: 720,                    // 16:9 aspect ratio
+        cfgScale: 7.5,                  // Balanced adherence to prompt
+        seed: Math.floor(Math.random() * 858993459)  // Random seed for variation
+    }
+};
+```
+
+### Step 4: Enhanced Image Generation with Error Handling
+
+Create a robust async function with proper error handling:
+
+```javascript
+async function generateImage() {
+    try {
+        console.log('Generating images with the following parameters:');
+        console.log('- Prompt:', inferenceParams.textToImageParams.text);
+        console.log('- Quality:', inferenceParams.imageGenerationConfig.quality);
+        console.log('- Dimensions:', `${inferenceParams.imageGenerationConfig.width}x${inferenceParams.imageGenerationConfig.height}`);
+        
+        const imagePaths = await generator.generateImages(inferenceParams);
+        
+        console.log('\nGeneration successful!');
+        console.log('Generated images saved to:');
+        imagePaths.forEach(path => console.log(`- ${path}`));
+    } catch (error) {
+        console.error('Error generating images:', error.message);
+        process.exit(1);
+    }
+}
+
+// Self-executing async function with error handling
+(async () => {
+    try {
+        await generateImage();
+    } catch (error) {
+        console.error('Fatal error:', error.message);
+        process.exit(1);
+    }
+})();
 ```
 
 ### Creating Your First Image Generator
