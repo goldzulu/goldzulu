@@ -11,6 +11,9 @@ function Article({ article }: { article: ArticleWithSlug }) {
       <Card className="md:col-span-3">
         <Card.Title href={`/articles/${article.slug}`}>
           {article.title}
+          <div className="text-sm text-zinc-400">
+            {article.author}
+          </div>
         </Card.Title>
         <Card.Eyebrow
           as="time"

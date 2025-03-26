@@ -50,6 +50,9 @@ export function ArticleLayout({
             <header className="flex flex-col">
               <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
                 {article.title}
+                <div className="text-lg text-zinc-400 mt-2">
+                  By {article.author}
+                </div>
               </h1>
               <time
                 dateTime={article.date}
