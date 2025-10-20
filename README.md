@@ -12,7 +12,8 @@ Welcome to my GitHub! You can call me Dzul (silent D). I'm an entrepreneur, AI e
 ## 💼 Current Projects
 - **XynAGI AI**: A startup platform I'm currently focused on, helping others adopt AI at an accelerated rate
 - **Snyffr**: The startup I’m currently focused on, developing AI-powered solutions for enhanced search experiences
-- **RevolvingRock**: AI-driven anonymity platform for real-time funding connections
+- **DDJM**: AI voice based intelligent assistant for a Malaysian charity organisation in Malaysia I helped found
+- **Ideaccurator**: AI-driven idea launcher and currator platform
 - **InterviewBot**: AI-based interview and feedback platform, expanding into coaching
 
 ## 🌱 I'm currently learning
@@ -28,7 +29,8 @@ Welcome to my GitHub! You can call me Dzul (silent D). I'm an entrepreneur, AI e
 ## 🚀 Fun Facts
 - I teach an **AI Club** and love working with budding young entrepreneurs and AI scientists
 - My kids are my pride and joy, and my daughters both learn to code by the age of 5
-- Always tinkering with personal projects
+- Always tinkering with personal IOT Projects
+- Have code live stream on Twitch and YouTube and known as the VoicetechGuy
 
 ## 📫 Connect with Me
 - [LinkedIn](https://www.linkedin.com/in/dzulkifleetaib)
