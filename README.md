@@ -11,7 +11,7 @@ Welcome to my GitHub! You can call me Dzul (silent D). I'm an entrepreneur, AI e
 
 ## 💼 Current Projects
 - **XynAGI AI**: A startup platform I'm currently focused on, helping others adopt AI at an accelerated rate
-- **Snyffr**: The startup I’m currently focused on, developing AI-powered solutions for enhanced search experiences
+- **Snyffr**: The startup developing AI-powered solutions for enhanced search experiences
 - **DDJM**: AI voice based intelligent assistant for a Malaysian charity organisation in Malaysia I helped found
 - **Ideaccurator**: AI-driven idea launcher and currator platform
 - **InterviewBot**: AI-based interview and feedback platform, expanding into coaching
