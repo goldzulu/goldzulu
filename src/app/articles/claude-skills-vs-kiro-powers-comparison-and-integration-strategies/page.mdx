@@ -1,0 +1,196 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Dzulkiflee Taib',
+  date: '2026-15-01',
+  title: 'Claude Skills vs Kiro Powers: Comparison and Integration Strategies',
+  description:
+    'A practical comparison of Claude Skills and Kiro Powers, with guidance on how to integrate skills into Kiro workflows today.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+## Overview
+
+I have been watching the "agent extensions" space turn into a bit of a jungle. Everyone wants their AI assistant to be better at a specific task, but the way we get there is now split across two very different philosophies. On one side you have **Claude Skills** (model-invoked guidance). On the other you have **Kiro Powers** (IDE-invoked guidance plus tools). Same goal. Different wiring.
+
+If you only remember one line, make it this: **Skills teach the model. Powers equip the model.**
+
+<svg
+  role="img"
+  aria-label="Claude Skills vs Kiro Powers overview diagram"
+  viewBox="0 0 900 260"
+  width="100%"
+  height="260"
+>
+  <rect x="20" y="20" width="400" height="220" rx="16" fill="#F3F4F6" />
+  <rect x="480" y="20" width="400" height="220" rx="16" fill="#F3F4F6" />
+  <text x="60" y="70" fontSize="24" fontWeight="700" fill="#111827">
+    Claude Skills
+  </text>
+  <text x="60" y="110" fontSize="16" fill="#374151">
+    Model-invoked
+  </text>
+  <text x="60" y="140" fontSize="16" fill="#374151">
+    Guidance only
+  </text>
+  <text x="60" y="170" fontSize="16" fill="#374151">
+    SKILL.md
+  </text>
+  <text x="520" y="70" fontSize="24" fontWeight="700" fill="#111827">
+    Kiro Powers
+  </text>
+  <text x="520" y="110" fontSize="16" fill="#374151">
+    Environment-invoked
+  </text>
+  <text x="520" y="140" fontSize="16" fill="#374151">
+    Guidance + tools
+  </text>
+  <text x="520" y="170" fontSize="16" fill="#374151">
+    POWER.md + MCP
+  </text>
+</svg>
+
+### Table of Contents
+
+- The Short Version
+- Claude Skills: The Model Pulls the Playbook
+- Kiro Powers: The IDE Brings the Toolbox
+- Side-by-Side Comparison
+- What Breaks in Real Life
+- Integration Strategies (Do This Today)
+- My Recommendation (Based on How Teams Actually Work)
+- Sources
+
+## The Short Version
+
+If you care about **portability and speed of authoring**, Skills are your friend. If you care about **end-to-end execution**, Powers are the clear winner. I like Skills for teaching and Powers for doing.
+
+## Claude Skills: The Model Pulls the Playbook
+
+Claude Skills are packaged guidance modules that the **model itself** decides to load. A skill is typically a `SKILL.md` file with a short description and the instructions the model should follow when a task matches the skill's scope. This is clean and lightweight, which is why skills have taken off across tools. See the official [Claude Skills overview](https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/overview) and [how to create skills](https://support.anthropic.com/en/articles/12512198-how-to-create-custom-skills).
+
+**What a good Skill includes:**
+
+- A tight description with clear triggers.
+- A repeatable process the model can follow.
+- Examples that reduce ambiguity.
+- References that keep it grounded.
+
+**Why I like Skills:**
+
+- Easy to write and share.
+- Easy to reason about.
+- They improve output quality without changing your tooling.
+- The [skills.sh ecosystem](https://skills.sh/docs) makes discovery painless.
+
+**Where they fall short:**
+
+- No real tool access.
+- Depends on the model triggering the right thing at the right time.
+- Fragmented setups across IDEs if your team uses different stacks.
+
+## Kiro Powers: The IDE Brings the Toolbox
+
+Kiro Powers are AWS Kiro's answer to the same problem, but with a more "full stack" philosophy. A power is not just guidance. It is **guidance plus tooling**. Kiro's [Powers documentation](https://kiro.dev/docs/powers/) explains how the IDE loads a power based on trigger keywords and injects its guidance along with the tools (via the [Model Context Protocol](https://kiro.dev/docs/mcp/)).
+
+Each power typically includes:
+
+1. `POWER.md` (steering and activation triggers)
+2. MCP configuration (tools and permissions)
+3. Optional hooks or sub-guides
+
+**Why Powers are strong:**
+
+- They let the agent take action, not just give advice.
+- They keep context clean by loading only what is relevant.
+- They remove the "but how do I run this?" gap.
+
+**The trade-offs:**
+
+- You are currently tied to Kiro.
+- Authoring takes more setup.
+- Tool permissions need to be managed carefully.
+
+## Side-by-Side Comparison
+
+| Dimension | Claude Skills | Kiro Powers |
+| --- | --- | --- |
+| Activation | Model-invoked | IDE/environment-invoked |
+| Scope | Guidance only | Guidance + tools |
+| Files | `SKILL.md` | `POWER.md` + MCP configs |
+| Portability | High | Low (today) |
+| Authoring effort | Low | Medium to high |
+| Best for | Guidance, best practices | Execution, workflows |
+
+## What Breaks in Real Life
+
+This is where the glossy demos end.
+
+- **Skills fail silently** if the triggers are too broad or too narrow.
+- **Powers can be over-permissioned** if you are not careful with tool access.
+- **Teams split across tools** end up maintaining parallel systems (skills here, powers there).
+
+## Integration Strategies (Do This Today)
+
+### 1) Manual Injection (Fastest)
+
+If you just need a skill once, paste the guidance into the chat or a project note. It is not elegant, but it works.
+
+### 2) Convert Skills into Powers (Best Long-Term)
+
+If you rely on a skill weekly, convert it into a power:
+
+- Move guidance into `POWER.md`.
+- Translate triggers into power keywords.
+- Add any supporting files.
+- Decide if you need MCP tools.
+
+### 3) Build a "Skill Loader" Power (Ambitious)
+
+A meta-power can fetch skills on demand and inject them into context. This is not mainstream yet, but it is the logical bridge if you are all-in on Kiro and you love the skills ecosystem.
+
+<svg
+  role="img"
+  aria-label="Integration paths for skills and powers"
+  viewBox="0 0 900 260"
+  width="100%"
+  height="260"
+>
+  <rect x="40" y="40" width="240" height="80" rx="12" fill="#DBEAFE" />
+  <text x="70" y="90" fontSize="18" fontWeight="600" fill="#1E3A8A">
+    Claude Skill
+  </text>
+  <rect x="330" y="40" width="240" height="80" rx="12" fill="#FEF3C7" />
+  <text x="360" y="90" fontSize="18" fontWeight="600" fill="#92400E">
+    Convert / Paste
+  </text>
+  <rect x="620" y="40" width="240" height="80" rx="12" fill="#DCFCE7" />
+  <text x="660" y="90" fontSize="18" fontWeight="600" fill="#166534">
+    Kiro Power
+  </text>
+  <line x1="280" y1="80" x2="330" y2="80" stroke="#6B7280" strokeWidth="2" />
+  <line x1="570" y1="80" x2="620" y2="80" stroke="#6B7280" strokeWidth="2" />
+  <rect x="40" y="150" width="820" height="70" rx="12" fill="#F3F4F6" />
+  <text x="70" y="195" fontSize="16" fill="#374151">
+    Optional: add MCP tools for actionability and dynamic loading
+  </text>
+</svg>
+
+## My Recommendation (Based on How Teams Actually Work)
+
+If you are experimenting, use Skills. If you are shipping, use Powers. If your team straddles both, pick the **three most valuable skills** and convert them into powers. That gives you 80 percent of the value without drowning in migration work.
+
+## Sources
+
+- [Anthropic Claude Skills overview](https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/overview)
+- [Anthropic: how to create custom skills](https://support.anthropic.com/en/articles/12512198-how-to-create-custom-skills)
+- [skills.sh documentation](https://skills.sh/docs)
+- [Vercel announcement: open agent skills ecosystem](https://vercel.com/changelog/introducing-skills-the-open-agent-skills-ecosystem)
+- [Kiro Powers documentation](https://kiro.dev/docs/powers/)
+- [Kiro MCP documentation](https://kiro.dev/docs/mcp/)
