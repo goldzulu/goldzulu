@@ -1,4 +1,7 @@
 import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import skillsVsPowersImage from './skills-vs-powers-overview.png'
+import integrationPathsImage from './integration-paths.png'
 
 export const article = {
   author: 'Dzulkiflee Taib',
@@ -21,40 +24,7 @@ I have been watching the "agent extensions" space turn into a bit of a jungle. E
 
 If you only remember one line, make it this: **Skills teach the model. Powers equip the model.**
 
-<svg
-  role="img"
-  aria-label="Claude Skills vs Kiro Powers overview diagram"
-  viewBox="0 0 900 260"
-  width="100%"
-  height="260"
->
-  <rect x="20" y="20" width="400" height="220" rx="16" fill="#F3F4F6" />
-  <rect x="480" y="20" width="400" height="220" rx="16" fill="#F3F4F6" />
-  <text x="60" y="70" fontSize="24" fontWeight="700" fill="#111827">
-    Claude Skills
-  </text>
-  <text x="60" y="110" fontSize="16" fill="#374151">
-    Model-invoked
-  </text>
-  <text x="60" y="140" fontSize="16" fill="#374151">
-    Guidance only
-  </text>
-  <text x="60" y="170" fontSize="16" fill="#374151">
-    SKILL.md
-  </text>
-  <text x="520" y="70" fontSize="24" fontWeight="700" fill="#111827">
-    Kiro Powers
-  </text>
-  <text x="520" y="110" fontSize="16" fill="#374151">
-    Environment-invoked
-  </text>
-  <text x="520" y="140" fontSize="16" fill="#374151">
-    Guidance + tools
-  </text>
-  <text x="520" y="170" fontSize="16" fill="#374151">
-    POWER.md + MCP
-  </text>
-</svg>
+<Image src={skillsVsPowersImage} alt="Claude Skills vs Kiro Powers comparison diagram" />
 
 ### Table of Contents
 
@@ -155,32 +125,7 @@ If you rely on a skill weekly, convert it into a power:
 
 A meta-power can fetch skills on demand and inject them into context. This is not mainstream yet, but it is the logical bridge if you are all-in on Kiro and you love the skills ecosystem.
 
-<svg
-  role="img"
-  aria-label="Integration paths for skills and powers"
-  viewBox="0 0 900 260"
-  width="100%"
-  height="260"
->
-  <rect x="40" y="40" width="240" height="80" rx="12" fill="#DBEAFE" />
-  <text x="70" y="90" fontSize="18" fontWeight="600" fill="#1E3A8A">
-    Claude Skill
-  </text>
-  <rect x="330" y="40" width="240" height="80" rx="12" fill="#FEF3C7" />
-  <text x="360" y="90" fontSize="18" fontWeight="600" fill="#92400E">
-    Convert / Paste
-  </text>
-  <rect x="620" y="40" width="240" height="80" rx="12" fill="#DCFCE7" />
-  <text x="660" y="90" fontSize="18" fontWeight="600" fill="#166534">
-    Kiro Power
-  </text>
-  <line x1="280" y1="80" x2="330" y2="80" stroke="#6B7280" strokeWidth="2" />
-  <line x1="570" y1="80" x2="620" y2="80" stroke="#6B7280" strokeWidth="2" />
-  <rect x="40" y="150" width="820" height="70" rx="12" fill="#F3F4F6" />
-  <text x="70" y="195" fontSize="16" fill="#374151">
-    Optional: add MCP tools for actionability and dynamic loading
-  </text>
-</svg>
+<Image src={integrationPathsImage} alt="Integration paths from Claude Skills to Kiro Powers" />
 
 ## My Recommendation (Based on How Teams Actually Work)
 
