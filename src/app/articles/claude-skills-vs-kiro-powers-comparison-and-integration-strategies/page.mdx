@@ -131,11 +131,48 @@ A meta-power can fetch skills on demand and inject them into context. This is no
 
 If you are experimenting, use Skills. If you are shipping, use Powers. If your team straddles both, pick the **three most valuable skills** and convert them into powers. That gives you 80 percent of the value without drowning in migration work.
 
+## Update — April 2026
+
+The landscape has shifted significantly since this article was published in January. Here is what changed and what still holds.
+
+### Skills Are No Longer "Guidance Only"
+
+The biggest shift: Claude Skills now **run code, generate files, and produce real deliverables**. Anthropic shipped pre-built Skills for Excel, PowerPoint, Word, and PDF that execute actual operations. Claude Code Skills support subagent execution, dynamic context injection, and invocation control (choose whether you or Claude triggers a skill). The original claim that Skills offer "no real tool access" is no longer accurate.
+
+Claude Code also **merged custom commands into Skills** — a `/deploy` command and a skill at `.claude/skills/deploy/SKILL.md` now work identically.
+
+### Skills Became an Open Standard
+
+Skills are no longer Claude-specific. The [Agent Skills open standard](https://agentskills.io) has been adopted by **32+ tools** including OpenAI Codex CLI, Cursor, ChatGPT, and more. The portability advantage I described in January turned out to be even stronger than expected — Skills are now the closest thing the industry has to a universal agent capability format.
+
+The [skills.sh](https://skills.sh) ecosystem grew from a directory into a **full marketplace with CLI installation**, launched by Vercel in late January 2026.
+
+### Powers Are Opening Up
+
+Kiro Powers announced cross-compatibility with other AI development tools ("coming soon"). Launch partners now include Datadog, Dynatrace, Figma, Neon, Netlify, Postman, Supabase, Stripe, and AWS Strands Agents. The "tied to Kiro" limitation is dissolving.
+
+The [community Powers repository](https://github.com/kirodotdev/powers) continues to grow with contributions from partner integrations.
+
+### The "Skill Loader" Prediction Came True
+
+In the original article I described building a "Skill Loader" Power as an "ambitious" integration path. Three months later, this is exactly what shipped — both as the skills.sh CLI and as standalone tools like the [Skill Loader MCP Server](https://www.npmjs.com/package/@goldzulu/skill-loader-mcp-server) that can discover, fetch, and convert skills on demand.
+
+### Revised Recommendation
+
+The original thesis — "Skills teach, Powers equip" — still captures the design philosophy difference. But the practical gap has narrowed considerably:
+
+- **Skills now execute**, not just advise. If your skill needs to run a script or generate an artifact, that works natively.
+- **Powers still have the edge** for complex multi-tool orchestration (MCP pipelines, database access, API calls mid-workflow).
+- **Cross-compatibility** means the "pick one" pressure is easing. Write Skills for portable expertise. Use Powers when you need deep tool integration.
+
+The industry is converging. The best strategy today is: **author in the Agent Skills format for reach, enhance with MCP tools where execution matters.**
+
 ## Sources
 
-- [Anthropic Claude Skills overview](https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/overview)
-- [Anthropic: how to create custom skills](https://support.anthropic.com/en/articles/12512198-how-to-create-custom-skills)
-- [skills.sh documentation](https://skills.sh/docs)
-- [Vercel announcement: open agent skills ecosystem](https://vercel.com/changelog/introducing-skills-the-open-agent-skills-ecosystem)
+- [Anthropic Agent Skills (API docs)](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
+- [Claude Code Skills documentation](https://code.claude.com/docs/en/skills)
+- [Agent Skills Open Standard (agentskills.io)](https://agentskills.io)
+- [skills.sh marketplace](https://skills.sh)
 - [Kiro Powers documentation](https://kiro.dev/docs/powers/)
+- [Kiro Powers GitHub (community)](https://github.com/kirodotdev/powers)
 - [Kiro MCP documentation](https://kiro.dev/docs/mcp/)
