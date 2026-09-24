@@ -1,0 +1,78 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Dzulkiflee Taib',
+  date: '2026-09-24',
+  title: 'Five psychology principles that make an app feel better',
+  description:
+    'Why some products feel good to use is not just taste. Five human psychology principles from Wyatt Feaster’s video, rewritten for builders who ship apps.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+## Why some apps just feel right
+
+You open an app and something clicks. Another app has the same features and somehow feels off. That gap is rarely “better taste.” A lot of it is how product design lines up with how people actually think.
+
+I watched [Wyatt Feaster’s video on the psychology that makes an app feel better](https://www.youtube.com/watch?v=MVOpq3WRnbo) and pulled out the five ideas worth carrying into real product work. Below is my write-up of those principles, with how I would use them when building.
+
+## Goal gradient effect
+
+Your brain likes closing loops. A long run that feels impossible until you see the finish line suddenly gets a last burst of energy. Apps that show progress tap the same wiring.
+
+Instead of “Complete this task,” surface “5 of 7 tasks done” or “About 3 minutes left in onboarding.” Progress bars and streaks work because they make the remaining gap feel finishable. Onboarding flows with a visible progress track usually complete more often than the same flow without one.
+
+**What I do with this:** every multi-step flow gets an honest progress signal. Not fake fullness. Real steps, labeled so the user can see how close they are.
+
+## Peak-end rule
+
+People do not remember the whole journey evenly. They remember the peaks and the ending. Great steak and great service stick. A rude waiter and bad food stick. The bland middle fades.
+
+That is why Airbnb and Duolingo spend so much care on success screens and positive reinforcement. It is also why a long, broken path leaves a lasting bad taste even if most screens were fine.
+
+**What I do with this:** design the high points and the last screen on purpose. Celebrate real wins. Fix the highest-friction moments first, because those are what people replay.
+
+## Labor illusion
+
+We often value things more when they take time. Gym work, a marathon, a slow-cooked meal. Time spent can feel like quality, even when the system could finish instantly.
+
+Some apps intentionally show a pause while validating an ID or running a background check, even if the check is already done. Sensitive work that finishes in a blink can feel unsafe. Faster is not always better when the user needs to feel that something careful happened.
+
+**What I do with this:** for high-trust steps (KYC, payments, permissions), give clear status and enough elapsed feedback that the user believes the system is working. Never invent fake delays for vanity. Use them only where trust matters.
+
+## Von Restorff effect
+
+We remember what stands out. In a wall of similar ice cream flavors, the unusual one sticks. Chocolate and vanilla blur.
+
+In UI, dumping every control into one dense menu makes nothing memorable. Strong products pick a few things to highlight with icons, illustration, or layout emphasis so the important actions are the ones users recall.
+
+**What I do with this:** one primary action per screen when I can. Secondary actions stay quieter. If everything is bold, nothing is.
+
+## Choice overload
+
+A restaurant menu with dozens of options creates tension. The same thing happens in apps with crowded navigation and every possible path exposed at once. The brain cannot process that many decisions, so the product feels uneasy even when the user cannot name why.
+
+Good apps cut, group, filter, and search. They remove options that do not earn a place on the first screen.
+
+**What I do with this:** default to fewer choices. Add progressive disclosure. If a screen needs a filter or search to be usable, the information architecture was probably too flat to begin with.
+
+## Putting it together
+
+None of these replace clear product thinking. They are lenses:
+
+1. Show progress so people finish.
+2. Make peaks and endings intentional.
+3. Respect trust with visible work when stakes are high.
+4. Make the important thing visually distinct.
+5. Cut choices until the next step is obvious.
+
+If an app already feels “off,” walk these five and you usually find the friction.
+
+## Source
+
+Adapted from Wyatt Feaster’s video [The psychology trick that makes any app feel 10x better](https://www.youtube.com/watch?v=MVOpq3WRnbo). Principles and examples are his; the framing and builder notes are mine.
